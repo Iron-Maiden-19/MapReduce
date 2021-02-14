@@ -2,6 +2,7 @@
 
 
 import sys
+from collections import Counter
  
 #Variables that keep track of the keys.
 
@@ -10,7 +11,7 @@ import sys
 #exception is that you can add import statements.
 
 dict_in = {}
-
+dup_free = []
 for line in sys.stdin:
         line = line.strip()
         key, value = line.split('\t')
@@ -23,11 +24,23 @@ for line in sys.stdin:
         for key in dict_in: 
           for k,v in dict_in.items():     
               for y in v:  
-                   if int(key) in v and y != int(key):
+                  if int(key) in v and y != int(key):
                        dict_out.setdefault(key, []).append(y)
-print('dict_out=',dict_out)
 
-                           
+conxn_out = list(dict_out.items())
+connect_cnt = [(i, dict(Counter(l))) for i, l in conxn_out]
+
+
+print('connect_cnt = ',connect_cnt)
+
+
+
+
+
+                          
+
+
+
 
         
 
