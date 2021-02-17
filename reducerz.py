@@ -74,13 +74,21 @@ for name, connections in network:
 
 
 for name, contents in sorted(output.items()):
-    print(f'Name: {name}')
-
     might = ', '.join([str(i) for i in sorted(contents['might'])])
-    print(f'\tMight know: {might}')
-
     probably = ', '.join([str(i) for i in sorted(contents['probably'])])
-    print(f'\tProbably knows: {probably}')
+    if len(probably) > 0 and len(might) > 0:  
+        print(f'{name}',f'Might:{might}', f'Probably:{probably}')
+    elif len(probably) == 0 and len(might) > 0:  
+        print(f'{name}',f'Might:{might}')
+    elif len(probably) > 0 and len(might) == 0:
+         print(f'{name}',f'Probably:{probably}')
+
+# might = ', '.join([str(i) for i in sorted(contents['might'])])
+# print(f'\tMight know: {might}')
+
+#probably = ', '.join([str(i) for i in sorted(contents['probably'])])
+   
+# print(f'\tProbably knows: {probably}')
 
 
    
@@ -88,13 +96,13 @@ for name, contents in sorted(output.items()):
 
 
    
-#if len(might) > 0 and len(probably) > 0:
-#   print("%s:Might(%s) Probably(%s)" % (name, ','.join(might), ','.join(probably)))       
-#elif len(might) > 0 and len(probably) == 0:
-#   print("%s:Might(%s)" % (name, ','.join(might)))
-#elif len(might) == 0 and len(probably) > 0:
-#   print("%s:Probably(%s)"% (name, ','.join(probably)))
-#else:
+
+
+
+
+
+
+
 #   print(name)
       
 
