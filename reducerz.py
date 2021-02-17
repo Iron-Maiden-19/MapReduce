@@ -3,6 +3,8 @@
 
 import sys
 from collections import Counter
+
+
  
 #Variables that keep track of the keys.
 
@@ -12,26 +14,113 @@ from collections import Counter
 
 dict_in = {}
 dup_free = []
+final_dict = {}
 for line in sys.stdin:
         line = line.strip()
         key, value = line.split('\t')
         value = value.split(',')
         value = [int(i) for i in value]
         dict_in[key] =value
-            
+#print('dict_in = ',dict_in)            
 
-        dict_out = {}
-        for key in dict_in: 
-          for k,v in dict_in.items():     
-              for y in v:  
-                  if int(key) in v and y != int(key):
-                       dict_out.setdefault(key, []).append(y)
+dict_out = {}
+for key in dict_in: 
+
+#   print('key in =', key)
+   for k,v in dict_in.items():
+#       print('k =',k)
+#       print('v =',v)     
+       for y in v:  
+           if (int(key) in v) and (y != int(key)) and (y not in dict_in[key]):
+              dict_out.setdefault(int(key), []).append(y)
+
+print('dict_out =',dict_out)
 
 conxn_out = list(dict_out.items())
+
+
 connect_cnt = [(i, dict(Counter(l))) for i, l in conxn_out]
 
 
-print('connect_cnt = ',connect_cnt)
+
+network  = []
+for i in connect_cnt:
+    d = {}
+    for j in i[1].keys():
+        if i[1][j] > 1:
+             d[j] = i[1][j]
+    network.append((i[0],d))
+
+
+
+
+
+output = {}
+for name, connections in network:
+    # If we've not added this name yet, create a blank entry:
+    if name not in output:
+        output[name] = {'probably': [], 'might': []}
+    
+    # Now loop through the connected people and add to the correct list:
+    for other_name, mutuals in connections.items():
+        if mutuals > 3:
+            output[name]['probably'].append(other_name)
+        else:
+            output[name]['might'].append(other_name)
+  
+
+
+
+
+
+for name, contents in sorted(output.items()):
+    print(f'Name: {name}')
+
+    might = ', '.join([str(i) for i in sorted(contents['might'])])
+    print(f'\tMight know: {might}')
+
+    probably = ', '.join([str(i) for i in sorted(contents['probably'])])
+    print(f'\tProbably knows: {probably}')
+
+
+   
+
+
+
+   
+#if len(might) > 0 and len(probably) > 0:
+#   print("%s:Might(%s) Probably(%s)" % (name, ','.join(might), ','.join(probably)))       
+#elif len(might) > 0 and len(probably) == 0:
+#   print("%s:Might(%s)" % (name, ','.join(might)))
+#elif len(might) == 0 and len(probably) > 0:
+#   print("%s:Probably(%s)"% (name, ','.join(probably)))
+#else:
+#   print(name)
+      
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
